@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress MybatisXMapperXmlInspection -->
+<mapper namespace="com.springboot.demo.dao.UserDao">
+    <resultMap id="user" type="com.springboot.demo.entity.User">
+        <result column="user_id" property="UserId" />
+        <result column="user_name" property="username" />
+        <result column="user_pwd" property="userpwd" />
+        <result column="user_realname" property="userrealname" />
+        <result column="user_img" property="userimg" />
+    </resultMap>
+
+    <insert id="InsertUser" useGeneratedKeys="true" keyProperty="userid">
+        insert into users(user_name,user_pwd,user_realname,user_img)
+        values(#{username} ,#{userpwd},#{userrealname},#{userimg})
+    </insert>
+    <update id="UpdateUserById" >
+     update users  set user_name=#{username},user_pwd=#{userpwd},user_realname=#{userrealname},user_img=#{userimg} where user_id=#{userid}
+ </update>
+    <delete id="DeleteUserById" parameterType="int">
+        delete  from users where user_id=#{userid}
+    </delete>
+
+    <delete id="DeleteUserNull">
+        delete  from users where user_name is null
+    </delete>
+
+
+    <select id="QueryAll" resultMap="user">
+        select user_id,user_name,user_pwd,user_realname,user_img from  users
+    </select>
+    <select id="QueryById" parameterType="int"  resultMap="user">
+        select user_id,user_name,user_pwd,user_realname,user_img from  users where  user_id=#{UserId}
+ </select>
+</mapper>
